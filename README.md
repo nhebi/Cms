@@ -1,4 +1,4 @@
-cms
+CMS
 ===
 
-Content management module for ZF2
+Content management module for Zend Framework 2. 
