@@ -1,0 +1,13 @@
+<h2>Edit Page</h2>
+
+<?php
+
+$form = $this->form;
+$form->setAttribute('class', 'form-horizontal');
+$form->setAttribute('action', '/pages/edit');
+$form->setAttribute('method', 'post');
+$form->prepare();
+
+?>
+
+<?= $this->ztbForm($form) ?>

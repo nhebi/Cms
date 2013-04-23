@@ -13,6 +13,12 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $eventManager->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            array($this, 'onDispatchError'),
+            100
+        );
     }
 
     public function getConfig()
@@ -25,8 +31,7 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    //__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                    __NAMESPACE__ => __DIR__ . '/../../src/' . __NAMESPACE__,
+                    __NAMESPACE__ => __DIR__ . '/src/Nhebi/' . __NAMESPACE__,
                 ),
             ),
         );
@@ -40,17 +45,27 @@ class Module
             'invokables' => array(),
             'services' => array(),
             'factories' => array(
-                // Perhaps there should be a generic model factory
-                // That injects the em
-                /*'model.college' => function ($sm) {
-                    $collegeModel = new \Mrss\Model\College;
-                    $em = $sm->get('em');
+                'model.page' => function ($sm) {
+                    $pageModel = new \Cms\Model\Page;
+                    $em = $sm->get('doctrine.entitymanager.orm_default');
 
-                    $collegeModel->setEntityManager($em);
+                    $pageModel->setEntityManager($em);
 
-                    return $collegeModel;
-                },*/
+                    return $pageModel;
+                },
             ),
         );
+    }
+
+    /**
+     * When all other routes fail, attempt to match it to a page
+     *
+     * @param MvcEvent $event
+     */
+    public function onDispatchError(MvcEvent $event)
+    {
+        $event->setControllerClass('\Cms\Controller\PageController');
+
+        //var_dump($event);die;
     }
 }

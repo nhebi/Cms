@@ -3,8 +3,8 @@
 namespace Cms\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+// Can't really depend directly on this. needs to use zfc-user
 use Mrss\Entity\User;
-use Zend\Stdlib\DateTime;
 
 /** @ORM\Entity
  * @ORM\Table(name="pages")
@@ -39,7 +39,7 @@ class Page
     /**
      * The user who last modified this page
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Mrss\Entity\User")
      */
     protected $updater;
 
@@ -96,7 +96,7 @@ class Page
         return $this->status;
     }
 
-    public function setCreated(DateTime $created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
 
@@ -108,7 +108,7 @@ class Page
         return $this->created;
     }
 
-    public function setUpdated(DateTime $updated)
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
 

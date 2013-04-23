@@ -1,0 +1,44 @@
+<h2>Pages</h2>
+
+<p>
+    <a href="/pages/edit" class="btn">+ Add a page</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Route</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <?php foreach ($this->pages as $page): ?>
+        <tr>
+            <td>
+                <?php echo $this->escapeHtml($page->getTitle()) ?>
+            </td>
+
+            <td>
+                <a href="/<?php echo $this->escapeHtml($page->getRoute()) ?>">
+                    <?php echo $this->escapeHtml($page->getRoute()) ?>
+                </a>
+            </td>
+
+            <td>
+                <?php echo $page->getStatus() ?>
+            </td>
+
+            <td>
+                <a href="/pages/edit/<?php echo $page->getId() ?>">
+                    Edit
+                </a>
+            </td>
+
+        </tr>
+    <?php endforeach ?>
+
+    </tbody>
+</table>
