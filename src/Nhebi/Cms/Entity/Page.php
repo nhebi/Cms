@@ -131,5 +131,4 @@ class Page
     {
         return $this->updater;
     }
-
 }
