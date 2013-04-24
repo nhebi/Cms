@@ -13,17 +13,21 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-
-        $eventManager->attach(
-            MvcEvent::EVENT_DISPATCH_ERROR,
-            array($this, 'onDispatchError'),
-            100
-        );
     }
 
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        $config = include __DIR__ . '/config/module.config.php';
+
+        // Get the cms page routes from a cache file
+        if (!empty($config['routeCacheFile'])) {
+            $cachedRoutes = file_get_contents($config['routeCacheFile']);
+
+            $config['router']['routes']['cmsPage']['options']
+                ['constraints']['pageRoute'] = $cachedRoutes;
+        }
+
+        return $config;
     }
 
     public function getAutoloaderConfig()
@@ -53,19 +57,22 @@ class Module
 
                     return $pageModel;
                 },
+                'service.routeCache' => function ($sm) {
+                    $routeCacheService = new \Cms\Service\RouteCache;
+
+                    // Inject the page model
+                    $pageModel = $sm->get('model.page');
+                    $routeCacheService->setPageModel($pageModel);
+
+                    // Grab the cache file from the config and pass it in
+                    $config = $sm->get('Config');
+                    if (!empty($config['routeCacheFile'])) {
+                        $routeCacheService->setCacheFile($config['routeCacheFile']);
+                    }
+
+                    return $routeCacheService;
+                },
             ),
         );
-    }
-
-    /**
-     * When all other routes fail, attempt to match it to a page
-     *
-     * @param MvcEvent $event
-     */
-    public function onDispatchError(MvcEvent $event)
-    {
-        $event->setControllerClass('\Cms\Controller\PageController');
-
-        //var_dump($event);die;
     }
 }

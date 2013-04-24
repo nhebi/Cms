@@ -3,15 +3,17 @@
 namespace Cms;
 
 return array(
-    /*'router' => array(
+    // Relative to app root
+    'routeCacheFile' => 'data/cache/cmsRoutes',
+    'router' => array(
         'routes' => array(
             'cmsPage' => array(
                 'type' => 'segment',
-                'priority' => 1,
+                'priority' => 100,
                 'options' => array(
                     'route' => '/:pageRoute',
                     'constraints' => array(
-                        'pageRoute' => '[a-zA-Z][a-zA-Z0-9_-]*'
+                        'pageRoute' => 'dynamically-populated-by-bootstrap'
                     ),
                     'defaults' => array(
                         'controller' => 'pages',
@@ -19,8 +21,23 @@ return array(
                     )
                 )
             ),
+            'pages' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/pages[/:action[/:id]]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'         => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'pages',
+                        'action' => 'index',
+                        'id' => 0
+                    )
+                )
+            )
         )
-    ),*/
+    ),
     'controllers' => array(
         'invokables' => array(
             'pages' => 'Cms\Controller\PageController',

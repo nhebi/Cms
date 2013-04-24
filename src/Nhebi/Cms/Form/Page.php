@@ -85,6 +85,13 @@ class Page extends Form
         $save->setAttribute('class', 'btn btn-primary');
         $buttons->add($save);
 
+        // Add the delete button
+        $delete = new Element\Submit('delete');
+        $delete->setValue('Delete');
+        $delete->setAttribute('class', 'btn btn-danger');
+        $delete->setAttribute('onClick', "return confirm('Are you sure?')");
+        $buttons->add($delete);
+
         return $buttons;
     }
 }

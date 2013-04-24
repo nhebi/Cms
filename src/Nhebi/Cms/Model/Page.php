@@ -34,8 +34,22 @@ class Page extends AbstractModel
      */
     public function findAll()
     {
-        $c = $this->getRepository()->findBy(array(), array('title' => 'ASC'));
-        return $c;
+        return $this->getRepository()->findBy(array(), array('title' => 'ASC'));
+    }
+
+    public function getPublishedRoutes()
+    {
+        $routes = array();
+        foreach($this->findAllByStatus('published') as $page) {
+            $routes[] = $page->getRoute();
+        }
+
+        return $routes;
+    }
+
+    public function findAllByStatus($status = 'published')
+    {
+        return $this->getRepository()->findBy(array('status' => $status));
     }
 
     public function save(PageEntity $page)
@@ -51,6 +65,12 @@ class Page extends AbstractModel
         $page->setUpdated($now);
 
         $this->getEntityManager()->persist($page);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete(PageEntity $page)
+    {
+        $this->getEntityManager()->remove($page);
         $this->getEntityManager()->flush();
     }
 }

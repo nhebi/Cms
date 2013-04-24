@@ -48,6 +48,21 @@ class PageController extends AbstractActionController
         // Handle form submission
         if ($this->getRequest()->isPost()) {
 
+            // Handle deletes
+            $buttons = $this->params()->fromPost('buttons');
+            if (!empty($buttons['delete'])) {
+                // Delete it
+                $pageModel->delete($page);
+
+                // Message
+                $this->flashMessenger()->addSuccessMessage('Page deleted.');
+
+                // Redirect
+                $this->redirect()->toRoute('pages');
+
+                return true;
+            }
+
             // Hand the POST data to the form for validation
             $form->setData($this->params()->fromPost());
 
@@ -57,14 +72,14 @@ class PageController extends AbstractActionController
                     ->get('doctrine.entitymanager.orm_default')
                     ->flush();
 
+                // Update the routeCache
+                // @todo: Only do this when the route or status changes
+                $routeCacheService = $this->getServiceLocator()
+                    ->get('service.routeCache');
+                $routeCacheService->rebuild();
+
                 $this->flashMessenger()->addSuccessMessage('Page saved.');
-                $this->redirect()->toRoute(
-                    'general',
-                    array(
-                        'controller' => 'pages',
-                        'action' => 'index'
-                    )
-                );
+                $this->redirect()->toRoute('pages');
             }
 
         }
