@@ -40,7 +40,7 @@ class Page extends AbstractModel
     public function getPublishedRoutes()
     {
         $routes = array();
-        foreach($this->findAllByStatus('published') as $page) {
+        foreach ($this->findAllByStatus('published') as $page) {
             $routes[] = $page->getRoute();
         }
 
