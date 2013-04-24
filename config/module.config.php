@@ -9,7 +9,7 @@ return array(
         'routes' => array(
             'cmsPage' => array(
                 'type' => 'segment',
-                'priority' => 100,
+                'priority' => 1,
                 'options' => array(
                     'route' => '/:pageRoute',
                     'constraints' => array(
@@ -23,6 +23,7 @@ return array(
             ),
             'pages' => array(
                 'type' => 'segment',
+                'priority' => 2,
                 'options' => array(
                     'route' => '/pages[/:action[/:id]]',
                     'constraints' => array(
