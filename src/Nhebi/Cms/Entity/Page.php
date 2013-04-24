@@ -36,13 +36,6 @@ class Page
     /** @ORM\Column(type="datetime") */
     protected $updated;
 
-    /**
-     * The user who last modified this page
-     *
-     * @ORM\ManyToOne(targetEntity="Mrss\Entity\User")
-     */
-    protected $updater;
-
     public function getId()
     {
         return $this->id;
@@ -118,17 +111,5 @@ class Page
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    public function setUpdater(User $updater)
-    {
-        $this->updater = $updater;
-
-        return $this;
-    }
-
-    public function getUpdater()
-    {
-        return $this->updater;
     }
 }
