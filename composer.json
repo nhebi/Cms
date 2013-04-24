@@ -1,5 +1,5 @@
 {
-    "name": "nhebi/Cms",
+    "name": "nhebi/cms",
     "type": "library",
     "description": "Content management module for Zend Framework 2",
     "keywords": ["zf2", "zend framework 2", "module", "cms", "pages"],
