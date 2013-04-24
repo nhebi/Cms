@@ -4,6 +4,7 @@
     "description": "Content management module for Zend Framework 2",
     "keywords": ["zf2", "zend framework 2", "module", "cms", "pages"],
     "homepage": "https://github.com/nhebi/cms",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Danny Ferguson",
