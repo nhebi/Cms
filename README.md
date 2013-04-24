@@ -22,11 +22,7 @@ Then install dependencies using Composer:
      php composer.phar update
 
 Next you'll need to update your database with the table for pages. Run the SQL
-file here:
-
-     [data/schema.sql](data/schema.sql)
-
-(Or just use Doctrine Migrations to generate the SQL from the [page entity]
+file here: [data/schema.sql](data/schema.sql) (Or just use Doctrine Migrations to generate the SQL from the [page entity]
 (src/Nhebi/Cms/Entity/Page.php) annotations.
 
 Make sure that the data/cache folder exists in your application and is writable.
