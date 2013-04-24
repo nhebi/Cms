@@ -3,8 +3,6 @@
 namespace Cms\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-// Can't really depend directly on this. needs to use zfc-user
-use Mrss\Entity\User;
 
 /** @ORM\Entity
  * @ORM\Table(name="pages")
