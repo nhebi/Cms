@@ -20,7 +20,8 @@ class Module
         $config = include __DIR__ . '/config/module.config.php';
 
         // Get the cms page routes from a cache file
-        if (!empty($config['routeCacheFile'])) {
+        if (!empty($config['routeCacheFile'])
+            && file_exists($config['routeCacheFile'])) {
             $cachedRoutes = file_get_contents($config['routeCacheFile']);
 
             $config['router']['routes']['cmsPage']['options']
