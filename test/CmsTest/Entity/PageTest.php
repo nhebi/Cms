@@ -27,7 +27,6 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertNull($page->getStatus());
         $this->assertNull($page->getCreated());
         $this->assertNull($page->getUpdated());
-        $this->assertNull($page->getUpdater());
     }
 
     public function testSetters()
