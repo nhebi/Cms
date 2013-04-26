@@ -129,6 +129,33 @@ class PageTest extends PHPUnit_Framework_TestCase
         //$this->assertSame($repoMock, $repo);
     }
 
+    public function testGetPublishedRoutes()
+    {
+        $pageMock = $this->getMock(
+            'Cms\Entity\Page',
+            array('getRoute')
+        );
+        $pageMock->expects($this->once())
+            ->method('getRoute')
+            ->will($this->returnValue('about'));
+
+        $repoMock = $this->getMock(
+            'Doctrine\ORM\EntityRepository',
+            array('findBy', 'getUnitOfWork'),
+            array(),
+            '',
+            false
+        );
+        $repoMock->expects($this->once())
+            ->method('findBy')
+            ->will($this->returnValue(array($pageMock)));
+
+        $this->model->setRepository($repoMock);
+        $result = $this->model->getPublishedRoutes();
+
+        $this->assertEquals(array('about'), $result);
+    }
+
     public function testSave()
     {
         $emMock = $this->getEmMock();
@@ -142,6 +169,21 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->model->save(new \Cms\Entity\Page);
     }
 
+    public function testDelete()
+    {
+        $emMock = $this->getEmMock();
+        $emMock->expects($this->once())
+            ->method('remove');
+        $emMock->expects($this->once())
+            ->method('flush');
+
+        $this->model->setEntityManager($emMock);
+
+        $pageMock = $this->getMock('Cms\Entity\Page');
+
+        $this->model->delete($pageMock);
+    }
+
     protected function getEmMock()
     {
         $repositoryMock = $this->getMock(
@@ -151,7 +193,13 @@ class PageTest extends PHPUnit_Framework_TestCase
 
         $emMock  = $this->getMock(
             '\Doctrine\ORM\EntityManager',
-            array('getRepository', 'getClassMetadata', 'persist', 'flush'),
+            array(
+                'getRepository',
+                'getClassMetadata',
+                'persist',
+                'flush',
+                'remove'
+            ),
             array(),
             '',
             false
