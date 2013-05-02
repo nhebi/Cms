@@ -42,11 +42,6 @@ class RouteCache
         $pipedRoutes = implode('|', $routes);
 
         // Write to the cache file
-        try {
-            file_put_contents($this->cacheFile, $pipedRoutes);
-        } catch (Exception $e) {
-            // Bubble it on up
-            throw $e;
-        }
+        file_put_contents($this->cacheFile, $pipedRoutes);
     }
 }
