@@ -58,9 +58,7 @@ class PageController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage('Page deleted.');
 
                 // Redirect
-                $this->redirect()->toRoute('pages');
-
-                return true;
+                return $this->redirect()->toRoute('pages');
             }
 
             // Hand the POST data to the form for validation
@@ -79,7 +77,7 @@ class PageController extends AbstractActionController
                 $routeCacheService->rebuild();
 
                 $this->flashMessenger()->addSuccessMessage('Page saved.');
-                $this->redirect()->toRoute('pages');
+                return $this->redirect()->toRoute('pages');
             }
 
         }
