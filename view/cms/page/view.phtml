@@ -1,11 +1,24 @@
-
-<div class="section_header">
+<div class="page-header">
     <h3><?php echo $this->escapeHtml($this->page->getTitle()) ?></h3>
+
+    <?php if ($this->isAllowed('adminMenu', 'view')): ?>
+        <a href="<?= $this->url(
+            'pages',
+            array(
+                'action' => 'edit',
+                'id' => $this->page->getId()
+            )
+        ) ?>">
+            Edit
+        </a>
+    <?php endif ?>
 </div>
 
-<div class="row">
-    <div class="span12">
-        <?php echo $this->escapeHtml($this->page->getContent()) ?>
+
+
+<div class="row cmsPage">
+    <div class="span12" id="cmsPageContent">
+        <?= $this->page->getContent() ?>
     </div>
 </div>
 

@@ -48,7 +48,8 @@ class Page extends Form
                     'label' => 'Content'
                 ),
                 'attributes' => array(
-                    'rows' => 8
+                    'rows' => 8,
+                    'id' => 'wysiwygContent'
                 )
             )
         );
